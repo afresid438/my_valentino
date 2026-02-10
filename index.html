@@ -26,7 +26,7 @@
     }
 
     h2 {
-        margin-top: 25px;
+        margin-top: 20px;
     }
 
     button {
@@ -90,14 +90,10 @@
 
 <body>
 
+<!-- ❤️ TITLE -->
 <h1>Will you be my Valentine, Ananas? 💘</h1>
 
-<div>
-    <button id="yes">Yes 💖</button>
-    <button id="no">No 💔</button>
-</div>
-
-<!-- WHY YOU SHOULD CHOOSE ME -->
+<!-- 💖 CHOOSE SECTION -->
 <div id="choice-section">
     <h2>Why you should choose me 💖</h2>
     <p id="message">
@@ -105,6 +101,12 @@
         If you don’t… I might cry 😢
     </p>
     <img id="reaction-img">
+</div>
+
+<!-- ✅ BUTTONS (AFTER CHOOSE SECTION) -->
+<div>
+    <button id="yes">Yes 💖</button>
+    <button id="no">No 💔</button>
 </div>
 
 <!-- 🎵 MUSIC -->
@@ -125,7 +127,7 @@
         noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
     });
 
-    // YES clicked
+    // YES clicked → happy photo
     yesBtn.addEventListener("click", () => {
         music.currentTime = 126;
         music.volume = 0.6;
@@ -137,7 +139,7 @@
         img.style.display = "block";
     });
 
-    // NO clicked (if ever 😄)
+    // NO clicked → cry photo
     noBtn.addEventListener("click", () => {
         message.innerText = "You didn’t choose me… I’m crying 😭💔";
         img.src = "cry.jpg";
