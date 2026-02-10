@@ -47,24 +47,35 @@
         position: absolute;
     }
 
-    /* HEART ANIMATION */
+    /* HEARTS */
     .heart {
         position: absolute;
         bottom: -20px;
         color: rgba(255, 255, 255, 0.8);
         font-size: 20px;
         animation: floatUp 5s linear infinite;
+        z-index: 1;
     }
 
     @keyframes floatUp {
-        0% {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(-110vh);
-            opacity: 0;
-        }
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(-110vh); opacity: 0; }
+    }
+
+    /* CONFETTI */
+    .confetti {
+        position: fixed;
+        top: -10px;
+        width: 10px;
+        height: 10px;
+        opacity: 0.9;
+        animation: fall linear forwards;
+        z-index: 999;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(0) rotate(0deg); }
+        100% { transform: translateY(110vh) rotate(720deg); }
     }
 </style>
 </head>
@@ -78,7 +89,7 @@
     <button id="no">No 💔</button>
 </div>
 
-<!-- 🎵 PERSONALIZED MUSIC -->
+<!-- 🎵 PERSONAL MUSIC -->
 <audio id="music" loop>
     <source src="love.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
@@ -89,7 +100,7 @@
     const yesBtn = document.getElementById("yes");
     const music = document.getElementById("music");
 
-    // Move NO button
+    // NO button runs away
     noBtn.addEventListener("mouseover", () => {
         const x = Math.random() * (window.innerWidth - 100);
         const y = Math.random() * (window.innerHeight - 100);
@@ -97,12 +108,12 @@
         noBtn.style.top = y + "px";
     });
 
-    // YES clicked → start music from 2:02
+    // YES click
     yesBtn.addEventListener("click", () => {
-        music.currentTime = 122; // 2 minutes 2 seconds
+        music.currentTime = 122;   // start at 2:02
         music.volume = 0.6;
         music.play();
-        alert("YAY!!! 💕💍 I knew you'd say YES!");
+        launchConfetti();
     });
 
     // Floating hearts
@@ -113,13 +124,24 @@
         heart.style.left = Math.random() * window.innerWidth + "px";
         heart.style.fontSize = Math.random() * 20 + 15 + "px";
         document.body.appendChild(heart);
-
-        setTimeout(() => {
-            heart.remove();
-        }, 5000);
+        setTimeout(() => heart.remove(), 5000);
     }
-
     setInterval(createHeart, 300);
+
+    // Confetti explosion
+    function launchConfetti() {
+        for (let i = 0; i < 180; i++) {
+            const confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.left = Math.random() * window.innerWidth + "px";
+            confetti.style.backgroundColor =
+                `hsl(${Math.random() * 360}, 100%, 60%)`;
+            confetti.style.animationDuration =
+                Math.random() * 2 + 2 + "s";
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 3000);
+        }
+    }
 </script>
 
 </body>
