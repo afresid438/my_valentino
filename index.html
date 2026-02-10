@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<h1>Will you be my Valentine, Ananas? 💘</h1>
+<title>Be My Valentine, Ananas 💘</title>
 
 <style>
     body {
@@ -21,8 +21,12 @@
 
     h1 {
         font-size: 3rem;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         z-index: 2;
+    }
+
+    h2 {
+        margin-top: 25px;
     }
 
     button {
@@ -51,7 +55,6 @@
     .heart {
         position: absolute;
         bottom: -20px;
-        color: rgba(255, 255, 255, 0.8);
         font-size: 20px;
         animation: floatUp 5s linear infinite;
         z-index: 1;
@@ -68,78 +71,99 @@
         top: -10px;
         width: 10px;
         height: 10px;
-        opacity: 0.9;
         animation: fall linear forwards;
         z-index: 999;
     }
 
     @keyframes fall {
-        0% { transform: translateY(0) rotate(0deg); }
-        100% { transform: translateY(110vh) rotate(720deg); }
+        to { transform: translateY(110vh) rotate(720deg); }
+    }
+
+    img {
+        width: 200px;
+        margin-top: 15px;
+        border-radius: 20px;
+        display: none;
     }
 </style>
 </head>
 
 <body>
 
-<h1>Will you be my Valentine? 💘</h1>
+<h1>Will you be my Valentine, Ananas? 💘</h1>
 
 <div>
     <button id="yes">Yes 💖</button>
     <button id="no">No 💔</button>
 </div>
 
-<!-- 🎵 PERSONAL MUSIC -->
+<!-- WHY YOU SHOULD CHOOSE ME -->
+<div id="choice-section">
+    <h2>Why you should choose me 💖</h2>
+    <p id="message">
+        If you choose me, I’ll be super happy 🥰  
+        If you don’t… I might cry 😢
+    </p>
+    <img id="reaction-img">
+</div>
+
+<!-- 🎵 MUSIC -->
 <audio id="music" loop>
     <source src="love.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
 </audio>
 
 <script>
-    const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
     const music = document.getElementById("music");
+    const message = document.getElementById("message");
+    const img = document.getElementById("reaction-img");
 
     // NO button runs away
     noBtn.addEventListener("mouseover", () => {
-        const x = Math.random() * (window.innerWidth - 100);
-        const y = Math.random() * (window.innerHeight - 100);
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
+        noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+        noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
     });
 
-    // YES click
+    // YES clicked
     yesBtn.addEventListener("click", () => {
-        music.currentTime = 122;   // start at 2:02
+        music.currentTime = 122;
         music.volume = 0.6;
         music.play();
         launchConfetti();
+
+        message.innerText = "You chose me 🥹💖 I’m so happy!";
+        img.src = "happy.jpg";
+        img.style.display = "block";
+    });
+
+    // NO clicked (if ever 😄)
+    noBtn.addEventListener("click", () => {
+        message.innerText = "You didn’t choose me… I’m crying 😭💔";
+        img.src = "cry.jpg";
+        img.style.display = "block";
     });
 
     // Floating hearts
-    function createHeart() {
+    setInterval(() => {
         const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "❤️";
+        heart.className = "heart";
+        heart.innerText = "❤️";
         heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.fontSize = Math.random() * 20 + 15 + "px";
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 5000);
-    }
-    setInterval(createHeart, 300);
+    }, 300);
 
-    // Confetti explosion
+    // Confetti
     function launchConfetti() {
-        for (let i = 0; i < 180; i++) {
-            const confetti = document.createElement("div");
-            confetti.classList.add("confetti");
-            confetti.style.left = Math.random() * window.innerWidth + "px";
-            confetti.style.backgroundColor =
-                `hsl(${Math.random() * 360}, 100%, 60%)`;
-            confetti.style.animationDuration =
-                Math.random() * 2 + 2 + "s";
-            document.body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 3000);
+        for (let i = 0; i < 150; i++) {
+            const c = document.createElement("div");
+            c.className = "confetti";
+            c.style.left = Math.random() * window.innerWidth + "px";
+            c.style.backgroundColor = `hsl(${Math.random()*360},100%,60%)`;
+            c.style.animationDuration = Math.random() * 2 + 2 + "s";
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 3000);
         }
     }
 </script>
